@@ -324,7 +324,6 @@ Future versions of this project will focus on improving both hardware robustness
 
 <p align="center">
   <img src="https://roboticsbackend.com/wp-content/uploads/2022/04/ros_logo.png" alt="ROS2 Logo" height="25" style="vertical-align:middle; margin: 0 8px;">
-  <img src="https://img.shields.io/badge/micro--ROS-Humble-blue" alt="micro-ROS Logo" height="28" style="vertical-align:middle; margin: 0 8px;">
   <img src="https://img.icons8.com/color/48/arduino.png" alt="Arduino Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
   <img src="https://img.icons8.com/color/48/python.png" alt="Python Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
   <img src="https://img.icons8.com/color/48/ubuntu.png" alt="Ubuntu Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
