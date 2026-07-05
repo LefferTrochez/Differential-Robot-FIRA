@@ -85,35 +85,23 @@ The repository is organized as follows:
 
 ```text
 .
-├── ESP32CAMcode/              # ESP32-CAM firmware for video streaming and Bluetooth-related functions
+├── ESP32CAMcode/              # ESP32-CAM firmware for onboard video streaming and auxiliary wireless functions
 ├── ESP32code/                 # Main ESP32 firmware for sensors, motors, actuators, and micro-ROS communication
-├── Images/                    # Robot images, diagrams, badges/icons, and contact icons
+├── Images/                    # Robot images, diagrams, visual assets, and contact icons
 │   ├── Electronic_Update.png  # Main README image of the upgraded robot
 │   ├── microROSagent.png      # micro-ROS communication architecture diagram
 │   ├── Email.png              # Contact icon
 │   ├── GoogleScholar.png      # Contact icon
 │   ├── LinkedIn.png           # Contact icon
 │   └── ORCID.png              # Contact icon
-├── Camera_Username.pdf        # ESP32-CAM reference documentation or username/configuration notes
-├── Demostration_Video.mp4     # Local demonstration video file
-├── Mechanical_assembly.f3z    # Mechanical assembly file
-├── Robot_FIRA_Username.pdf    # Legacy platform reference documentation or user manual
+├── Camera_Username.pdf        # Reference manual for the original Samsung legacy camera
+├── Mechanical_assembly.f3z    # Fusion 360 mechanical assembly file
+├── Robot_FIRA_Username.pdf    # Legacy FIRA/YSR-A robot platform user manual
 ├── Upgrade_File.pdf           # Technical report or upgrade documentation
 ├── ros2_ws.zip                # ROS 2 workspace with host-side nodes and launch files
 ├── LICENSE.txt                # Apache-2.0 license
 └── README.md                  # Main project documentation
 ```
-
-Brief description of the main repository contents:
-
-- `ESP32code/` contains the main embedded firmware for the ESP32 controller, including sensor acquisition, motor commands, actuator control, mode selection, and micro-ROS communication.
-- `ESP32CAMcode/` contains the ESP32-CAM firmware used for onboard video streaming and auxiliary wireless control functions.
-- `Images/` contains visual assets used in the README, including the upgraded robot image, the micro-ROS architecture diagram, and contact icons.
-- `ros2_ws.zip` contains the ROS 2 workspace with the host-side package, nodes, and launch files.
-- `Upgrade_File.pdf` documents the electronic upgrade and system architecture.
-- `Mechanical_assembly.f3z` contains the mechanical assembly resource for the upgraded platform.
-- `Camera_Username.pdf` and `Robot_FIRA_Username.pdf` contain reference documentation related to the camera and legacy robot platform.
-
 ---
 
 ## Setup
