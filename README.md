@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/ESP32-main%20controller-green" alt="ESP32" valign="middle">
   <img src="https://img.shields.io/badge/ESP32--CAM-video%20streaming-green" alt="ESP32-CAM" valign="middle">
   <img src="https://img.shields.io/badge/Arduino-IDE-teal" alt="Arduino IDE" valign="middle">
-  <a href="https://doi.org/10.5281/zenodo.21200899"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21200899-blue" alt="DOI" valign="middle"></a>
+  <a href="https://doi.org/10.5281/zenodo.21201306"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21201306-blue" alt="DOI" valign="middle"></a>
   <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-Apache--2.0-red" alt="Apache 2.0 License" valign="middle"></a>
 </p>
 
@@ -363,7 +363,7 @@ If you use this repository in academic work, research projects, technical report
 
 This repository has been archived in Zenodo and assigned a DOI for versioned citation:
 
-[https://doi.org/10.5281/zenodo.21200899](https://doi.org/10.5281/zenodo.21200899)
+[https://doi.org/10.5281/zenodo.21201306](https://doi.org/10.5281/zenodo.21201306)
 
 ### How to cite
 
@@ -374,9 +374,9 @@ The repository can be cited as software in the following format:
   author       = {Trochez, Leffer and López-Jiménez, Jorge},
   title        = {Differential Robot FIRA: ROS 2/micro-ROS Retrofitting Architecture for a Legacy Robot Soccer Platform},
   year         = {2026},
-  version      = {1.0.0},
-  doi          = {10.5281/zenodo.21200899},
-  url          = {https://doi.org/10.5281/zenodo.21200899}
+  version      = {1.0.1},
+  doi          = {10.5281/zenodo.21201306},
+  url          = {https://doi.org/10.5281/zenodo.21201306}
 }
 ```
 
