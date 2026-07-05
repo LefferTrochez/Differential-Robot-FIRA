@@ -11,6 +11,7 @@
   <img src="https://img.shields.io/badge/ESP32-main%20controller-green" alt="ESP32" valign="middle">
   <img src="https://img.shields.io/badge/ESP32--CAM-video%20streaming-green" alt="ESP32-CAM" valign="middle">
   <img src="https://img.shields.io/badge/Arduino-IDE-teal" alt="Arduino IDE" valign="middle">
+  <a href="https://doi.org/10.5281/zenodo.21200899"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21200899.svg" alt="DOI" valign="middle"></a>
   <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-Apache--2.0-red" alt="Apache 2.0 License" valign="middle"></a>
 </p>
 
@@ -360,9 +361,9 @@ Bogotá D.C., Colombia
 
 If you use this repository in academic work, research projects, technical reports, or derivative software developments, please cite the archived Zenodo release associated with this project.
 
-This repository will be archived in Zenodo and assigned a DOI for versioned citation.
+This repository has been archived in Zenodo and assigned a DOI for versioned citation:
 
-[Zenodo DOI link pending]
+[https://doi.org/10.5281/zenodo.21200899](https://doi.org/10.5281/zenodo.21200899)
 
 ### How to cite
 
@@ -370,12 +371,12 @@ The repository can be cited as software in the following format:
 
 ```bibtex
 @software{trochez2026differentialrobotfira,
-  author       = {Trochez, Leffer and López-Jiménez, Jorge Alfredo},
+  author       = {Trochez, Leffer and López-Jiménez, Jorge},
   title        = {Differential Robot FIRA: ROS 2/micro-ROS Retrofitting Architecture for a Legacy Robot Soccer Platform},
   year         = {2026},
   version      = {1.0.0},
-  doi          = {DOI_PENDING},
-  url          = {https://github.com/LefferTrochez/Differential-Robot-FIRA}
+  doi          = {10.5281/zenodo.21200899},
+  url          = {https://doi.org/10.5281/zenodo.21200899}
 }
 ```
 
