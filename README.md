@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/ESP32-main%20controller-green" alt="ESP32" valign="middle">
   <img src="https://img.shields.io/badge/ESP32--CAM-video%20streaming-green" alt="ESP32-CAM" valign="middle">
   <img src="https://img.shields.io/badge/Arduino-IDE-teal" alt="Arduino IDE" valign="middle">
-  <a href="https://doi.org/10.5281/zenodo.21200899"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21200899.svg" alt="DOI" valign="middle"></a>
+  <a href="https://doi.org/10.5281/zenodo.21200899"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21200899-blue" alt="DOI" valign="middle"></a>
   <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-Apache--2.0-red" alt="Apache 2.0 License" valign="middle"></a>
 </p>
 
