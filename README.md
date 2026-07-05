@@ -54,9 +54,10 @@ The upgraded platform integrates ESP32, ESP32-CAM, onboard sensing, motor contro
 
 The following video provides a short visual overview of the upgraded FIRA differential robot prototype.
 
-<!-- Replace the following line with the GitHub Assets video link after uploading the video to an issue, release, or README drag-and-drop area. -->
 
-https://github.com/user-attachments/assets/PASTE_VIDEO_ASSET_LINK_HERE
+https://github.com/user-attachments/assets/053389d7-12a1-44e7-9ee8-c520436eb5fc
+
+
 
 ---
 
