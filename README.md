@@ -149,26 +149,33 @@ source ~/.bashrc
 
 ## Requirements
 
-The original development environment used the following main tools and platforms:
+The prototype was developed and tested using the following environment:
 
-- Ubuntu 22.04
-- ROS 2 Humble
-- micro-ROS Agent
-- Arduino IDE
-- ESP32 board support for Arduino
-- Python 3
-- OpenCV
-- ESP32
+- Ubuntu 22.04 LTS
+- ROS 2 Humble Hawksbill
+- Python 3.10
+- Arduino IDE 2.3.4
+- ESP32 Arduino Core 2.0.2
+- micro-ROS Arduino library for ROS 2 Humble
+- micro-ROS Agent for ROS 2 Humble
+- OpenCV 4.8 or later
+- NumPy 1.24 or later
+- ESP32 development board
 - ESP32-CAM AI Thinker module
 
-Arduino libraries used by the embedded firmware include:
+Arduino libraries used by the embedded firmware:
 
-- Adafruit MPU6050
-- ESP32Servo
-- VL53L0X by Pololu
-- Adafruit INA219
-- DabbleESP32
-- micro-ROS Arduino
+- Adafruit MPU6050 2.2.6
+- Adafruit BusIO 1.16.1
+- Adafruit Unified Sensor 1.1.14
+- Adafruit INA219 1.2.3
+- VL53L0X by Pololu 1.3.1
+- ESP32Servo 3.0.5
+- DabbleESP32 1.5.1
+- micro_ros_arduino Humble branch
+
+> **Note**  
+> The listed versions correspond to the development environment used for this prototype. Newer versions may work, but they were not systematically tested.
 
 ### ESP32 board support
 
@@ -317,7 +324,7 @@ Future versions of this project will focus on improving both hardware robustness
 
 <p align="center">
   <img src="https://roboticsbackend.com/wp-content/uploads/2022/04/ros_logo.png" alt="ROS2 Logo" height="25" style="vertical-align:middle; margin: 0 8px;">
-  <img src="https://micro.ros.org/img/logo.png" alt="micro-ROS Logo" height="35" style="vertical-align:middle; margin: 0 8px;">
+  <img src="https://img.shields.io/badge/micro--ROS-Humble-blue" alt="micro-ROS Logo" height="28" style="vertical-align:middle; margin: 0 8px;">
   <img src="https://img.icons8.com/color/48/arduino.png" alt="Arduino Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
   <img src="https://img.icons8.com/color/48/python.png" alt="Python Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
   <img src="https://img.icons8.com/color/48/ubuntu.png" alt="Ubuntu Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
