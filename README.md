@@ -1,181 +1,268 @@
-
-# Electronic Upgrade for FIRA Robot
+# Differential Robot FIRA - ROS 2/micro-ROS Retrofitting Architecture
 
 <p align="center">
-  <img src="Electronic Update v1.0.jpg" alt="YSR-A Updated Robot" width="600">
+  <img src="Images/Electronic_Update.png" alt="Differential Robot FIRA Upgrade" width="600">
 </p>
 
-![Build Status](https://img.shields.io/badge/build-stable-green)
-![micro-ROS](https://img.shields.io/badge/micro--ROS-ESP32-blue)
-![C++](https://img.shields.io/badge/language-C++-blue)
-![License](https://img.shields.io/badge/license-Restricted-red)
+<p align="center">
+  <img src="https://img.shields.io/badge/status-prototype-blue" alt="Prototype Status" valign="middle">
+  <img src="https://img.shields.io/badge/ROS2-Humble-blue" alt="ROS 2 Humble" valign="middle">
+  <img src="https://img.shields.io/badge/micro--ROS-ESP32-blue" alt="micro-ROS ESP32" valign="middle">
+  <img src="https://img.shields.io/badge/ESP32-main%20controller-green" alt="ESP32" valign="middle">
+  <img src="https://img.shields.io/badge/ESP32--CAM-video%20streaming-green" alt="ESP32-CAM" valign="middle">
+  <img src="https://img.shields.io/badge/Arduino-IDE-teal" alt="Arduino IDE" valign="middle">
+  <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-Apache--2.0-red" alt="Apache 2.0 License" valign="middle"></a>
+</p>
 
 ---
 
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [Repository Contents](#repository-contents)
-3. [Hardware Components](#hardware-components)
-4. [System Integration](#system-integration)
-5. [Improvements](#improvements)
-6. [Future Work](#future-work)
-7. [Setup](#setup)
-8. [micro-ROS Architecture](#micro-ros-architecture)
-9. [Technologies Used](#technologies-used)
-10. [Support Video](#support-video)
-11. [Copyright Notice](#copyright-notice)
+2. [Video](#video)
+3. [Upgrade Overview](#upgrade-overview)
+4. [Repository Structure](#repository-structure)
+5. [Setup](#setup)
+6. [Requirements](#requirements)
+7. [Hardware Components](#hardware-components)
+8. [System Integration](#system-integration)
+9. [micro-ROS Architecture](#micro-ros-architecture)
+10. [Run the Robot](#run-the-robot)
+11. [Improvements](#improvements)
+12. [Future Work](#future-work)
+13. [Technologies Used](#technologies-used)
+14. [Contact](#contact)
+15. [Citation](#citation)
+16. [License](#license)
 
 ---
 
 ## Introduction
 
-This repository documents the electronic update of the legacy YSR-A (5vs5 Ver128) robot, originally designed for the FIRA competition. The updated version modernizes the robot using embedded systems, real-time data transmission, and sensor integration under the ROS 2 ecosystem.
+This repository documents the electronic and software upgrade of a legacy FIRA differential-drive robot originally designed for small-size robot soccer competitions. The original platform followed a remote-brainless architecture, where perception, decision-making, and control were performed by external infrastructure, while the robot mainly received wireless motion commands.
+
+The objective of this project is not to design a new robot from scratch, nor to present a final autonomous navigation platform. Instead, the project proposes a retrofitting architecture that preserves the original mechanical structure while replacing obsolete electronics, communication interfaces, and software with a modular ROS 2/micro-ROS-compatible embedded system.
+
+The upgraded platform integrates ESP32, ESP32-CAM, onboard sensing, motor control, Bluetooth/Wi-Fi communication, micro-ROS, ROS 2 host-side nodes, teleoperation, camera visualization, and expandable hardware interfaces. This makes the legacy robot usable again as a compact educational and research-oriented mobile robotics platform.
+
+> **Note**  
+> This repository should be treated as a prototype-level technical reference. The current implementation demonstrates the retrofitting architecture and functional integration of the main hardware and software components. It is not presented as a final PCB implementation, a fully autonomous robot, or a complete SLAM/navigation platform.
 
 ---
 
-## Repository Contents
+## Video
 
-- **ESP32code.ino** – Main ESP32 firmware for motor control, sensors, and micro-ROS communication.
-- **ESP32CAMcode.ino** – ESP32-CAM firmware for video streaming and Bluetooth reception.
-- **microROSagent.png** – Diagram of micro-ROS communication architecture.
-- **Electronic Update v1.0.jpg** – Image of the updated robot hardware (used as profile image).
-- **Robot_FIRA_Project_v1_0.pdf** – Project documentation.
-- **YSR_A(5vs5-Ver128)Usermanual.pdf** – Legacy platform user manual.
-- **SDC-310_240_manu(E).pdf** – CCD camera manual.
-- **README.md** – This file.
+The following video provides a short visual overview of the upgraded FIRA differential robot prototype.
+
+<!-- Replace the following line with the GitHub Assets video link after uploading the video to an issue, release, or README drag-and-drop area. -->
+
+https://github.com/user-attachments/assets/PASTE_VIDEO_ASSET_LINK_HERE
 
 ---
 
-## Hardware Components
+## Upgrade Overview
 
-- ESP32 and ESP32-CAM
-- 4x VL53L0X (with I2C multiplexer)
-- INA219 (voltage/current sensor)
-- MPU6050 (IMU)
-- TB6612FNG motor driver
-- Two Faulhaber MOTOR 2224U006SR motors with encoders
-- LED indicators and control push button
-- 2S battery pack with custom regulator (5V output)
-- Capacitors and inductors for power stabilization
+The upgrade transforms the legacy FIRA robot from a centralized RF/vision-dependent platform into a ROS 2-enabled embedded robotic system. The main idea is to reuse the mechanically functional base while modernizing the layers that limit current use: sensing, embedded control, communication, and software integration.
 
----
+Main upgraded capabilities include:
 
-## System Integration
+- **Preserved mechanical base:** original chassis, wheels, motors, and differential-drive structure.
+- **Embedded control:** ESP32-based sensing, actuation, mode selection, and micro-ROS communication.
+- **Onboard camera:** ESP32-CAM for HTTP/MJPEG video streaming.
+- **Onboard sensing:** IMU, time-of-flight distance sensors, voltage/current monitoring, and encoder-based motion information.
+- **Dual communication mode:** Bluetooth for direct/manual testing and Wi-Fi/micro-ROS for ROS 2 integration.
+- **ROS 2 software architecture:** node-based structure for motor control, sensors, encoders, actuators, camera visualization, and teleoperation.
+- **Expandable hardware:** GPIO, I2C, UART, PWM, power, and ground interfaces for future sensors or actuators.
 
-- ESP32 handles sensors, motor control, and micro-ROS communication over UDP4.
-- ESP32-CAM streams video (HTTP MJPEG) and receives Bluetooth commands via Dabble.
-- All sensors are connected through a power-stabilized perfboard with pin headers for future expansion.
-- micro-ROS agent is run on a ROS 2 host via Wi-Fi.
+The contribution of this repository is the documented transition from a legacy remote-brainless robot soccer platform to a modular embedded ROS 2/micro-ROS-compatible platform for education, research, and future multi-robot experiments.
 
 ---
 
-## Improvements
+## Repository Structure
 
-- ESP32 + ESP32-CAM (Wi-Fi + Bluetooth)
-- ESP32-CAM (OV2640) camera
-- TB6612FNG dual H-bridge motor drivers
-- 2 × Faulhaber 2224U006SR motors
-- 7.4V Li-ion (2S AAA) battery
-- Added MPU6050, VL53L0X, LiDAR, INA219
-- Wi-Fi (ROS 2) + Bluetooth (Dabble App)
-- 3 LEDs (Reset, BT, Wi-Fi) + buzzer
-- Multiple I2C, UART, PWM ports available
+The repository is organized as follows:
 
----
+```text
+.
+├── ESP32CAMcode/              # ESP32-CAM firmware for video streaming and Bluetooth-related functions
+├── ESP32code/                 # Main ESP32 firmware for sensors, motors, actuators, and micro-ROS communication
+├── Images/                    # Robot images, diagrams, badges/icons, and contact icons
+│   ├── Electronic_Update.png  # Main README image of the upgraded robot
+│   ├── microROSagent.png      # micro-ROS communication architecture diagram
+│   ├── Email.png              # Contact icon
+│   ├── GoogleScholar.png      # Contact icon
+│   ├── LinkedIn.png           # Contact icon
+│   └── ORCID.png              # Contact icon
+├── Camera_Username.pdf        # ESP32-CAM reference documentation or username/configuration notes
+├── Demostration_Video.mp4     # Local demonstration video file
+├── Mechanical_assembly.f3z    # Mechanical assembly file
+├── Robot_FIRA_Username.pdf    # Legacy platform reference documentation or user manual
+├── Upgrade_File.pdf           # Technical report or upgrade documentation
+├── ros2_ws.zip                # ROS 2 workspace with host-side nodes and launch files
+├── LICENSE.txt                # Apache-2.0 license
+└── README.md                  # Main project documentation
+```
 
-## Future Work
+Brief description of the main repository contents:
 
-- Integrate and test LD19 LiDAR with ROS 2.
-- Conduct final performance evaluation in real scenarios.
-- Design and manufacture custom PCB.
-- Develop advanced software (SLAM and autonomous navigation).
-- Publish documentation and open-source all resources.
+- `ESP32code/` contains the main embedded firmware for the ESP32 controller, including sensor acquisition, motor commands, actuator control, mode selection, and micro-ROS communication.
+- `ESP32CAMcode/` contains the ESP32-CAM firmware used for onboard video streaming and auxiliary wireless control functions.
+- `Images/` contains visual assets used in the README, including the upgraded robot image, the micro-ROS architecture diagram, and contact icons.
+- `ros2_ws.zip` contains the ROS 2 workspace with the host-side package, nodes, and launch files.
+- `Upgrade_File.pdf` documents the electronic upgrade and system architecture.
+- `Mechanical_assembly.f3z` contains the mechanical assembly resource for the upgraded platform.
+- `Camera_Username.pdf` and `Robot_FIRA_Username.pdf` contain reference documentation related to the camera and legacy robot platform.
 
 ---
 
 ## Setup
 
-### Clone the ROS 2 workspace
+### Clone the repository
 
-You can download and clone the `ros2_ws` workspace from the following link:
+```bash
+git clone https://github.com/LefferTrochez/Differential-Robot-FIRA.git
+cd Differential-Robot-FIRA
+```
 
-📁 [ros2_ws - OneDrive](https://1drv.ms/u/c/bbff4df3d4a71f59/EQFS6SLN8G1LjDHccNO1hlYBL5kKMeeIzTfUJ0hXwQ3mNA?e=QNpNlW)
+### Extract the ROS 2 workspace
 
-### Library Installation
+The ROS 2 workspace is included directly in the repository as:
 
-Install the following Arduino libraries:
+```text
+ros2_ws.zip
+```
+
+Extract it in your preferred development directory. For example:
+
+```bash
+unzip ros2_ws.zip -d ros2_ws
+cd ros2_ws
+```
+
+Then build the workspace:
+
+```bash
+colcon build --symlink-install
+source install/setup.bash
+```
+
+To make the workspace available in every new terminal, add the setup command to your `.bashrc`:
+
+```bash
+echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+> **Important**  
+> Adjust the workspace path depending on where you extracted `ros2_ws.zip`.
+
+---
+
+## Requirements
+
+The original development environment used the following main tools and platforms:
+
+- Ubuntu 22.04
+- ROS 2 Humble
+- micro-ROS Agent
+- Arduino IDE
+- ESP32 board support for Arduino
+- Python 3
+- OpenCV
+- ESP32
+- ESP32-CAM AI Thinker module
+
+Arduino libraries used by the embedded firmware include:
 
 - Adafruit MPU6050
 - ESP32Servo
-- VL53L0X (by Pololu)
+- VL53L0X by Pololu
 - Adafruit INA219
 - DabbleESP32
+- micro-ROS Arduino
 
-### ESP32-CAM Configuration
+### ESP32 board support
 
-In the Arduino IDE, select the board:
+In the Arduino IDE, add the ESP32 board manager URL:
+
+```text
+https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+```
+
+Then install the ESP32 board package from the Boards Manager.
+
+### ESP32-CAM configuration
+
+For the ESP32-CAM firmware, select the AI Thinker board and define the camera model as:
 
 ```cpp
 #define CAMERA_MODEL_AI_THINKER
 ```
 
-Then select: **AI THINKER ESP32 CAM**
+---
+
+## Hardware Components
+
+The upgraded robot integrates the following main components:
+
+- **ESP32:** main embedded controller for sensors, motors, actuators, mode selection, and micro-ROS communication.
+- **ESP32-CAM:** onboard camera module for HTTP/MJPEG video streaming.
+- **TB6612FNG dual motor driver:** motor driver for independent control of the left and right motors.
+- **Faulhaber MOTOR 2224U006SR motors:** original differential-drive motors with encoders.
+- **MPU6050:** inertial measurement unit for motion-related measurements.
+- **VL53L0X sensors:** time-of-flight distance sensors for local range measurements.
+- **TCA9548A I2C multiplexer:** I2C expansion for multiple sensors with similar addressing.
+- **INA219:** voltage and current sensing for power monitoring.
+- **LEDs, buzzer, and push button:** user interface for mode selection and status feedback.
+- **2S battery and voltage regulation:** power supply for embedded electronics and motor actuation.
+- **Expansion headers:** GPIO, I2C, UART, PWM, power, and ground interfaces for future modules.
+
+---
+
+## System Integration
+
+The upgraded FIRA robot is organized around a modular hardware/software architecture. The ESP32 acts as the main embedded controller, handling sensor acquisition, motor commands, actuator signals, mode selection, and micro-ROS communication. The ESP32-CAM provides the onboard video interface and supports camera streaming over Wi-Fi.
+
+The robot supports two complementary operation modes. Bluetooth mode allows direct manual testing and basic hardware validation without launching the complete ROS 2 stack. Wi-Fi mode enables integration with ROS 2 through micro-ROS, allowing the ESP32 to exchange sensor readings, motor commands, actuator states, and monitoring information with ROS 2 nodes running on the host computer.
+
+On the host side, the ROS 2 package is organized into independent nodes for motor command processing, sensor aggregation, encoder processing, actuator routing, camera visualization, and teleoperation. This avoids a monolithic software structure and makes the platform easier to maintain, extend, and reuse.
 
 ---
 
 ## micro-ROS Architecture
 
 <p align="center">
-  <img src="microROSagent.png" alt="micro-ROS Agent Diagram" width="600">
+  <img src="Images/microROSagent.png" alt="micro-ROS Agent Diagram" width="600">
 </p>
-micro-ROS brings the capabilities of ROS 2 to microcontrollers like the ESP32. It allows them to communicate with other ROS 2 nodes through a micro-ROS Agent, which acts as a bridge between the microcontroller and the ROS 2 network. Data is exchanged over serial, UDP, or other supported transports, enabling real-time sensor data publishing and command reception on resource-constrained devices.
 
----
+micro-ROS brings ROS 2 concepts to resource-constrained microcontrollers such as the ESP32. In this project, the ESP32 runs a micro-ROS client and communicates with a micro-ROS Agent running on the ROS 2 host computer. The agent bridges the embedded device with the ROS 2 network using UDP4 communication.
 
-## micro-ROS Installation Instructions (Ubuntu 22.04, ROS 2 Humble)
+This architecture allows the robot to publish sensor information and receive motor or actuator commands using ROS 2 topics, enabling integration with modern teleoperation, visualization, logging, and future autonomous behavior modules.
 
-```bash
-sudo snap install arduino
-```
+### micro-ROS installation instructions
 
-Install ESP32 boards:
-- Preferences > Additional Board URLs:  
-  `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json`
-- Board Manager > Install **esp32** v2.0.2
+Install the micro-ROS Arduino library:
 
-Then:
 ```bash
 git clone https://github.com/micro-ROS/micro_ros_arduino.git -b humble
-# Add the ZIP as library in Arduino IDE
 ```
 
-Create the Agent:
+Then add the library to the Arduino IDE as a ZIP library or copy it to your Arduino libraries folder.
+
+Create and build the micro-ROS Agent inside the ROS 2 workspace:
 
 ```bash
-cd ~/LF-Robotics/Robot_FIRA/ros2_ws/src/
+cd ~/ros2_ws/src/
 git clone https://github.com/micro-ROS/micro-ROS-Agent.git -b humble
 cd ..
 rosdep install --from-paths src --ignore-src -r -y
 colcon build --symlink-install
-```
-
-Fix common Python issues:
-```bash
-source $HOME/.espressif/python_env/idf4.4_py3.10_env/bin/activate
-pip install --upgrade catkin_pkg
-deactivate
-```
-
-Add this to your `~/.bashrc`:
-```bash
-source ~/LF-Robotics/Robot_FIRA/ros2_ws/install/setup.bash
+source install/setup.bash
 ```
 
 Start the micro-ROS Agent:
 
 ```bash
-ip a  # or hostname -I
 ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888
 ```
 
@@ -183,39 +270,124 @@ ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888
 
 ## Run the Robot
 
-Once everything is set up:
+After flashing the ESP32 and ESP32-CAM firmware and starting the robot, run the ROS 2 nodes from the host computer.
 
 ```bash
 # Terminal 1
-ros2 launch robot_fira launch_node.launch.py
-
-# Terminal 2
-ros2 run robot_fira teleop.py
+source ~/ros2_ws/install/setup.bash
+ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888
 ```
+
+```bash
+# Terminal 2
+source ~/ros2_ws/install/setup.bash
+ros2 launch robot_fira launch_nodes.launch.py
+```
+
+```bash
+# Terminal 3
+source ~/ros2_ws/install/setup.bash
+ros2 run robot_fira teleop_node.py
+```
+
+> **Note**  
+> Node names, launch file names, and package names should be adjusted if they differ in the extracted `ros2_ws` workspace.
+
+---
+
+## Improvements
+
+The upgraded prototype introduces several improvements over the original legacy robot soccer platform:
+
+- Replacement of RF-only command reception with Bluetooth and Wi-Fi communication.
+- Integration of ESP32 and ESP32-CAM modules.
+- Addition of onboard sensing for inertial, distance, and power-related measurements.
+- Integration of motor control through a modern dual motor driver.
+- Camera streaming without depending on the original overhead CCD camera and frame grabber.
+- ROS 2/micro-ROS communication through a topic-based architecture.
+- Modular host-side software nodes for teleoperation, sensors, motors, encoders, actuators, and camera visualization.
+- Expansion interfaces for future sensors, actuators, and navigation modules.
+
+---
+
+## Future Work
+
+Future versions of this project will focus on improving both hardware robustness and software capabilities. Planned work includes:
+
+- Designing and manufacturing a custom PCB.
+- Improving wiring, mechanical mounting, and long-term robustness.
+- Completing LiDAR integration.
+- Evaluating communication latency, power consumption, motor behavior, and sensor reliability.
+- Adding autonomous navigation and mapping capabilities.
+- Extending the platform for multi-robot coordination and robot soccer-inspired experiments.
+- Improving documentation, setup instructions, and reproducible examples.
 
 ---
 
 ## Technologies Used
 
 <p align="center">
-  <img src="https://roboticsbackend.com/wp-content/uploads/2022/04/ros_logo.png" alt="ROS2 Logo" width="100" style="vertical-align: -50px"> 
-  <img src="https://img.icons8.com/color/48/arduino.png" width="50">
-  <img src="https://img.icons8.com/color/48/python.png" width="50">
+  <img src="https://roboticsbackend.com/wp-content/uploads/2022/04/ros_logo.png" alt="ROS2 Logo" height="25" style="vertical-align:middle; margin: 0 8px;">
+  <img src="https://micro.ros.org/img/logo.png" alt="micro-ROS Logo" height="35" style="vertical-align:middle; margin: 0 8px;">
+  <img src="https://img.icons8.com/color/48/arduino.png" alt="Arduino Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
+  <img src="https://img.icons8.com/color/48/python.png" alt="Python Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
+  <img src="https://img.icons8.com/color/48/ubuntu.png" alt="Ubuntu Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
+  <img src="https://www.espressif.com/sites/all/themes/espressif/images/logo-guidelines/primary-vertical-logo.png" alt="Espressif Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
+  <img src="https://opencv.org/wp-content/uploads/2020/07/OpenCV_logo_black.png" alt="OpenCV Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
+  <img src="https://img.icons8.com/color/48/autodesk-fusion-360.png" alt="Fusion 360 Logo" height="42" style="vertical-align:middle; margin: 0 8px;">
 </p>
 
+---
+
+## Contact
+
+Leffer Trochez <br>
+Electronic Engineer and M.Sc. in Electronic and Computer Engineering  
+Universidad de los Andes  
+Faculty of Engineering  
+Department of Electrical and Electronic Engineering  
+GIAP Research Group  
+Bogotá D.C., Colombia  
+
+<p>
+  <a href="mailto:l.trochez@uniandes.edu.co"><img src="Images/Email.png" alt="Email" height="28" valign="middle"></a>
+  &nbsp;
+  <a href="https://www.linkedin.com/in/leffer-trochez/"><img src="Images/LinkedIn.png" alt="LinkedIn" height="28" valign="middle"></a>
+  &nbsp;
+  <a href="https://scholar.google.com/citations?user=Ve1E4AEAAAAJ&hl=es&oi=ao"><img src="Images/GoogleScholar.png" alt="Google Scholar" height="28" valign="middle"></a>
+  &nbsp;
+  <a href="https://orcid.org/0009-0002-5321-7652"><img src="Images/ORCID.png" alt="ORCID" height="28" valign="middle"></a>
+</p>
 
 ---
 
-## Support Video
+## Citation
 
-📺 [Support video tutorial - OneDrive](https://1drv.ms/v/c/bbff4df3d4a71f59/EaiGXuramTVJjmTzD2OHNhMB1i05BiB5UKKjjw56KOtR_w?e=c3pjqZ)
+If you use this repository in academic work, research projects, technical reports, or derivative software developments, please cite the archived Zenodo release associated with this project.
+
+This repository will be archived in Zenodo and assigned a DOI for versioned citation.
+
+[Zenodo DOI link pending]
+
+### How to cite
+
+The repository can be cited as software in the following format:
+
+```bibtex
+@software{trochez2026differentialrobotfira,
+  author       = {Trochez, Leffer and López-Jiménez, Jorge Alfredo},
+  title        = {Differential Robot FIRA: ROS 2/micro-ROS Retrofitting Architecture for a Legacy Robot Soccer Platform},
+  year         = {2026},
+  version      = {1.0.0},
+  doi          = {DOI_PENDING},
+  url          = {https://github.com/LefferTrochez/Differential-Robot-FIRA}
+}
+```
 
 ---
 
-## Copyright Notice
+## License
 
-© 2025 Leffer Trochez. All rights reserved.  
-This repository is publicly available for educational and consultation purposes only. Any reproduction, redistribution, modification, or commercial use of the content, in whole or in part, is strictly prohibited without explicit written permission from the author.
+Copyright (c) 2026 Leffer Trochez.
 
-For inquiries or permissions, please contact: l.trochez@uniandes.edu.co
-
+This project is licensed under the Apache-2.0 license. See the [LICENSE.txt](LICENSE.txt) file for the full license text.
